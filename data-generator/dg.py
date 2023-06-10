@@ -14,4 +14,20 @@ def generer_langage():
     return langage
 
 
-print(generer_langage())
+def generate_data_in_file(filename, nb_langages):
+    with open(filename, 'w') as file:
+        for _ in range(nb_langages):
+            langage = generer_langage()
+            line = ' '.join(langage)
+            file.write(line + '\n')
+
+def read_data_in_file(filename):
+    langages = []
+    with open(filename, 'r') as file:
+        for line in file:
+            langage = line.strip().split()
+            langages.append(langage)
+    return langages
+
+# generate_data_in_file("data", 1000)
+print(read_data_in_file("data"))
