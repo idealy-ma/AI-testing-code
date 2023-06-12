@@ -1,3 +1,4 @@
+import csv
 import random
 
 def generer_mot():
@@ -13,21 +14,33 @@ def generer_langage():
         langage.append(generer_mot())
     return langage
 
-
-def generate_data_in_file(filename, nb_langages):
-    with open(filename, 'w') as file:
-        for _ in range(nb_langages):
-            langage = generer_langage()
-            line = ' '.join(langage)
-            file.write(line + '\n')
+def generer_donnees_csv(nombre_donnees, nom_fichier):
+    donnees_uniques = set()
+    with open(nom_fichier, 'w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(['Langage'])
+        while len(donnees_uniques) < nombre_donnees:
+            langage = ','.join(generer_langage())
+            if langage not in donnees_uniques:
+                donnees_uniques.add(langage)
+                writer.writerow([langage])
 
 def read_data_in_file(filename):
     langages = []
-    with open(filename, 'r') as file:
-        for line in file:
-            langage = line.strip().split()
+    with open(filename, 'r') as csvfile:
+        reader = csv.reader(csvfile)
+        header = next(reader)
+        
+        for row in reader:
+            langage = row[0].split(",")
             langages.append(langage)
+
     return langages
 
-# generate_data_in_file("data", 1000)
-print(_ for _ in read_data_in_file("data"))
+
+
+
+generer_donnees_csv(10000, 'data.csv' )
+data = read_data_in_file("data.csv")
+for _ in data:
+    print(_)
