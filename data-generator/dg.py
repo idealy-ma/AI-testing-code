@@ -30,4 +30,4 @@ def read_data_in_file(filename):
     return langages
 
 # generate_data_in_file("data", 1000)
-print(read_data_in_file("data"))
+print(_ for _ in read_data_in_file("data"))
