@@ -37,6 +37,17 @@ def read_data_in_file(filename):
 
     return langages
 
+def is_prefix_code(langage):
+    langage = sorted(langage, key=len)
+    n = len(langage)
+    
+    for i in range(n):
+        for j in range(i+1, n):
+            if langage[j].startswith(langage[i]):
+                return 0 
+    
+    return 1
+
 
 
 
