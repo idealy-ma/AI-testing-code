@@ -81,7 +81,6 @@ for _ in data:
     data_info.append(getColumnValue(_))
 
 write_data_to_csv("training_data.csv", data_info, header)
-
 # c = set(['011', '1000110', '00000', '0110', '010'])
 # print(sardinas_patterson(set(c)))
 
