@@ -14,11 +14,11 @@ def generer_langage():
         langage.append(generer_mot())
     return langage
 
-def generer_donnees_csv(nombre_donnees, nom_fichier):
+def generer_donnees_csv(nombre_donnees, nom_fichier, header = ["Langage"]):
     donnees_uniques = set()
     with open(nom_fichier, 'w', newline='') as file:
         writer = csv.writer(file)
-        writer.writerow(['Langage'])
+        writer.writerow(header)
         while len(donnees_uniques) < nombre_donnees:
             langage = ','.join(generer_langage())
             if langage not in donnees_uniques:
@@ -48,10 +48,47 @@ def is_prefix_code(langage):
     
     return 1
 
+# Sardinas and patterson
+def multiply(lang1, lang2):
+    newLang = set()
+    for u in lang1 :
+        for v in lang2 :
+            if len(u) >= len(v) and u.find(v) == 0:
+                newLang.add(u[len(v):])
+    return newLang
+
+def removeVoid(language):
+    result = set()
+    for u in language:
+        if u != '' :
+            result.add(u)
+
+    return result
+
+def sardinas_patterson(language):
+    uN = removeVoid(multiply(language, language))
+    uN_1 = []
+    while True :
+        uN_1.append(set(uN))
+        uN = multiply(uN, language).union(multiply(language, uN))
+        
+        for value in uN :
+            if value == "":
+                return 0
+
+        for value in uN_1 :
+            if value == uN :
+                return 1
 
 
-
-generer_donnees_csv(10000, 'data.csv' )
+# generer_donnees_csv(10000, 'data.csv' )
 data = read_data_in_file("data.csv")
+
 for _ in data:
     print(_)
+    print(sardinas_patterson(set(_)))
+
+# c = set(['011', '1000110', '00000', '0110', '010'])
+# print(sardinas_patterson(set(c)))
+
+
